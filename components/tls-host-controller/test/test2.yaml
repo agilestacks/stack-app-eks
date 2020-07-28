@@ -1,0 +1,122 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"extensions/v1beta1","kind":"Ingress","metadata":{"annotations":{"kubernetes.io/tls-acme":"true"},"labels":{"project":"api-proxy","provider":"agilestacks.com"},"name":"api","namespace":"automation-hub"},"spec":{"rules":[{"host":"api.app.rick0j.dev.superhub.io","http":{"paths":[{"backend":{"serviceName":"api","servicePort":80},"path":"/"}]}}],"tls":[{"hosts":["api.app.rick0j.dev.superhub.io"],"secretName":"api-tls"}]}}
+    kubernetes.io/tls-acme: "true"
+  labels:
+    project: api-proxy
+    provider: agilestacks.com
+  name: api
+  namespace: test2
+spec:
+  rules:
+  - host: api.app.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: api
+          servicePort: 80
+        path: /
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    agilestacks.com/stack-component: pgweb
+    agilestacks.io/authproxy-port: "80"
+    agilestacks.io/authproxy-service: automation-hub-pgweb-pgweb
+    kubernetes.io/ingress.class: ""
+  labels:
+    app: automation-hub-pgweb-pgweb
+    chart: pgweb-0.1.0
+    heritage: Tiller
+    release: automation-hub-pgweb
+  name: automation-hub-pgweb-pgweb
+  namespace: test2
+spec:
+  rules:
+  - host: pgweb-rick0j-pgweb.apps.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: automation-hub-pgweb-pgweb-auth-svc
+          servicePort: 4180
+        path: /
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"extensions/v1beta1","kind":"Ingress","metadata":{"annotations":{"kubernetes.io/tls-acme":"true"},"labels":{"project":"git-service","provider":"agilestacks.com"},"name":"git","namespace":"automation-hub"},"spec":{"rules":[{"host":"git.app.rick0j.dev.superhub.io","http":{"paths":[{"backend":{"serviceName":"git","servicePort":80},"path":"/"}]}}],"tls":[{"hosts":["git.app.rick0j.dev.superhub.io"],"secretName":"git-tls"}]}}
+    kubernetes.io/tls-acme: "true"
+  labels:
+    project: git-service
+    provider: agilestacks.com
+  name: git
+  namespace: test2
+spec:
+  rules:
+  - host: git.app.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: git
+          servicePort: 80
+        path: /
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    agilestacks.com/stack-component: dex
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"extensions/v1beta1","kind":"Ingress","metadata":{"annotations":{"agilestacks.com/stack-component":"dex","kubernetes.io/tls-acme":"true"},"name":"dex-ingress","namespace":"dex"},"spec":{"rules":[{"host":"auth.rick0j.dev.superhub.io","http":{"paths":[{"backend":{"serviceName":"dex","servicePort":5556},"path":"/"}]}}],"tls":[{"hosts":["auth.rick0j.dev.superhub.io"],"secretName":"dex-ingress-tls"}]}}
+    kubernetes.io/tls-acme: "true"
+  name: dex-ingress
+  namespace: test2
+spec:
+  rules:
+  - host: auth.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: dex
+          servicePort: 5556
+        path: /
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    agilestacks.com/stack-component: Traefik
+    agilestacks.io/authproxy-port: "80"
+    agilestacks.io/authproxy-service: traefik-dashboard
+    kubernetes.io/ingress.class: ""
+    kubernetes.io/tls-acme: "true"
+  labels:
+    app: traefik
+    chart: traefik-1.68.5
+    component: traefik-traefik-dashboard
+    heritage: Tiller
+    project: ingress
+    provider: agilestacks.com
+    release: traefik
+  name: traefik-dashboard
+  namespace: test2
+spec:
+  rules:
+  - host: apps.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-dashboard-auth-svc
+          servicePort: 4180
+  - host: test2y.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: test2ytest2
+          servicePort: 8000

@@ -1,0 +1,37 @@
+---
+version: 1
+kind: component
+meta:
+  name: tls-host-controller
+  title: TLS Host Controller
+  brief: A MutatingWebhook style admission controller that synchronizes spec:tls:host with spec:rules:host
+  source:
+    dir: ../tls-host-controller
+
+requires:
+- kubernetes
+- cert-manager
+
+lifecycle:
+  verbs:
+  - deploy
+  - undeploy
+
+parameters:
+- name: dns.domain
+  env: DOMAIN_NAME
+- name: component.tls-host-controller
+  parameters:
+  - name: namespace
+    value: kube-system
+    env: NAMESPACE
+  - name: image
+    value: agilestacks/tls-host-controller
+  - name: tag
+    value: stable
+  - name: defaultCN
+    value: ${component.ingress.fqdn},${component.ingress.ssoFqdn}
+
+templates:
+  files:
+  - deploy/*.template
