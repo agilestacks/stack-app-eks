@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dex-ingress
+  namespace: ${component.dex.namespace}
+  annotations:
+    agilestacks.com/stack-component: dex
+    kubernetes.io/tls-acme: "true"
+spec:
+  rules:
+  - host: ${component.dex.oidcIssuerFqdn}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: dex
+          servicePort: 5556
+  tls:
+    - hosts:
+      - ${component.dex.oidcIssuerFqdn}
+      secretName: dex-ingress-tls
