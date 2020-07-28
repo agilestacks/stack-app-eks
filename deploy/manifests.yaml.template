@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tls-host-controller
+  namespace: ${component.tls-host-controller.namespace}
+  labels:
+    app: tls-host-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tls-host-controller
+  template:
+    metadata:
+      labels:
+        app: tls-host-controller
+    spec:
+      containers:
+      - name: tls-host-controller
+        image: ${component.tls-host-controller.image}:${component.tls-host-controller.tag}
+        imagePullPolicy: Always
+        args:
+        - "-default-cn=${component.tls-host-controller.defaultCN}"
+        ports:
+        - containerPort: 4443
+        volumeMounts:
+        - name: tls-host-controller-certs
+          mountPath: /data/
+          readOnly: true
+      volumes:
+      - name: tls-host-controller-certs
+        secret:
+          secretName: tls-host-controller-certs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tls-host-controller
+  namespace: ${component.tls-host-controller.namespace}
+  labels:
+    app: tls-host-controller
+spec:
+  ports:
+  - port: 443
+    targetPort: 4443
+  selector:
+    app: tls-host-controller

@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    agilestacks.com/stack-component: Traefik
+    agilestacks.io/authproxy-port: "80"
+    agilestacks.io/authproxy-service: traefik-dashboard
+    kubernetes.io/tls-acme: "true"
+  labels:
+    app: traefik
+    chart: traefik-1.68.5
+    component: traefik-traefik-dashboard
+    heritage: Tiller
+    project: ingress
+    provider: agilestacks.com
+    release: traefik
+  name: dupetest
+  namespace: test2
+spec:
+  rules:
+  - host: really.long.name-with-lots.of.segments.and-hyphens.that-is.longer.than.64.chars.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-dashboard-long-svc
+          servicePort: 8000
+  - host: every.host.in.this.ingress-has.strangely.long.dns.names.apps.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: traefik-dashboard-auth-svc
+          servicePort: 4180
+  - host: this.one.is.really.long.tooingress-has.strangely.long.dns.names.apps.rick0j.dev.superhub.io
+    http:
+      paths:
+      - backend:
+          serviceName: test2ytest2
+          servicePort: 8000
+  tls:
+  - hosts:
+    - every.xvlbzg.superhub.io
+    - every.host.in.this.ingress-has.strangely.long.dns.names.apps.rick0j.dev.superhub.io
+    - really.long.name-with-lots.of.segments.and-hyphens.that-is.longer.than.64.chars.superhub.io
+    - this.one.is.really.long.tooingress-has.strangely.long.dns.names.apps.rick0j.dev.superhub.io
+    secretName: auto-long-ingress-2-tls
