@@ -1,0 +1,113 @@
+---
+version: 1
+kind: component
+meta:
+  category: Networking
+  name: external-dns
+  title: External DNS
+  description: ExternalDNS synchronizes exposed Kubernetes Services and Ingresses with DNS providers.
+  license: Apache 2.0
+  maturity: beta
+  version: 0.7.2
+  source:
+    dir: ../../components/external-dns
+
+requires:
+- aws
+- kubernetes
+- helm
+
+provides:
+- external-dns
+
+lifecycle:
+  verbs:
+  - deploy
+  - undeploy
+
+parameters:
+- name: cloud
+  parameters:
+  - name: kind
+    env:  CLOUD_KIND
+  - name: region
+    empty: allow
+    env: NON_CONFLICTING_AWS_REGION
+  - name: aws.secretKey
+    empty: allow
+    env: NON_CONFLICTING_AWS_SECRET_KEY
+  - name: aws.accessKey
+    empty: allow
+    env: NON_CONFLICTING_AWS_ACCESS_KEY
+- name: dns.domain
+  env: DOMAIN_NAME
+- name: dns.name
+  env: CLUSTER_NAME
+- name: component.istio
+  empty: allow
+  parameters:
+  - name: namespace
+    value: istio-system
+    env: ISTIO_NAMESPACE
+  - name: ingressGateway
+    empty: allow
+    env: ISTIO_GATEWAY
+    # default works well if we have only one instance of an istio
+    # value: ingressgateway
+- name: component.etcd.endpoint
+  empty: allow
+- name: component.external-dns
+  parameters:
+  - name: namespace
+    value: kube-system
+    env: NAMESPACE
+  - name: name
+    value: external-dns
+    env: COMPONENT_NAME
+  - name: interval
+    value: 1m
+  - name: provider
+    value: aws
+    env: PROVIDER
+  - name: domainFilters
+    env: DOMAIN_FILTERS
+    empty: allow
+  #   value: "['${dns.domain}']"
+  - name: chart.name
+    value: "bitnami/external-dns"
+    env: CHART_NAME
+  - name: chart.version
+    value: 2.20.6
+  #  value: 2.15.1
+    env: CHART_VERSION
+  - name: rfc2136
+    empty: allow
+    parameters:
+    - name: host
+    - name: port
+      value: 53
+    - name: zone
+    - name: tsig.secret
+    - name: tsig.keyname
+    - name: tsig.secret-alg
+      value: hmac-sha256
+  - name: route53.zoneTags
+    value: superhub.io/stack/${dns.domain}
+    empty: allow
+    env: ROUTE53_ZONE_TAGS
+- name: terraform.bucket
+  parameters:
+  - name: name
+    env: STATE_BUCKET
+    empty: allow
+  - name: region
+    env: STATE_REGION
+    empty: allow
+
+templates:
+  files:
+  - "examples/*.template"
+  - "aws/*.template"
+  - "coredns/*.template"
+  - "rfc2136/*.template"
+  - "*.template"
