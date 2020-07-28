@@ -1,0 +1,87 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: applications
+  region: us-east-2
+  version: "1.17"
+
+availabilityZones:
+- us-east-2a
+- us-east-2b
+- us-east-2c
+
+nodeGroups:
+- name: workers
+  desiredCapacity: 1
+  minSize: 1
+  maxSize: 5
+  instancesDistribution:
+    instanceTypes:
+    - m5.xlarge
+    - m5a.xlarge
+    - r4.xlarge
+    - t3.xlarge
+    onDemandBaseCapacity: 0
+    onDemandPercentageAboveBaseCapacity: 0
+  volumeSize: 50
+  volumeType: gp2
+  ssh:
+    allow: true # will use ~/.ssh/id_rsa.pub as the default ssh key
+    publicKeyName: agilestacks
+    # publicKeyPath: ~/.ssh/agilestacks-2019.11.pub
+  tags:
+    k8s.io/cluster-autoscaler/enabled: "true"
+    k8s.io/cluster-autoscaler/applications: "owned"
+  iam:
+    attachPolicyARNs:
+    - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+    - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+    - arn:aws:iam::aws:policy/AmazonS3FullAccess
+    - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
+    withAddonPolicies:
+      albIngress: true
+      autoScaler: true
+      cloudWatch: true
+      certManager: true
+      externalDNS: true
+      ebs: true
+
+# iam:
+#   withOIDC: true
+#   serviceAccounts:
+#   - metadata:
+#       name: applications
+#       namespace: kube-system
+#       labels: {aws-usage: "cluster-ops"}
+#     attachPolicy: # inline policy can be defined along with `attachPolicyARNs`
+#       Version: "2012-10-17"
+#       Statement:
+#       - Effect: Allow
+#         Action:
+#         - "autoscaling:DescribeAutoScalingGroups"
+#         - "autoscaling:DescribeAutoScalingInstances"
+#         - "autoscaling:DescribeLaunchConfigurations"
+#         - "autoscaling:DescribeTags"
+#         - "autoscaling:SetDesiredCapacity"
+#         - "autoscaling:TerminateInstanceInAutoScalingGroup"
+#         # for external-dns
+#         - "route53:ChangeResourceRecordSets"
+#         - "route53:ListHostedZones"
+#         - "route53:ListResourceRecordSets"
+#         # read-write to s3 (hub or terraform state)
+#         - "s3:ListBucket"
+#         - "s3:*Object"
+#         # Reserved for future OIDC integration
+#         # - "sts:AssumeRoleWithWebIdentity"
+#         Resource: '*'
+
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+    - audit
+    - authenticator
+    - controllerManager
+    # - api
+    # - scheduler
+    # - all

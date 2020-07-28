@@ -1,0 +1,6 @@
+.env
+*.bubble
+*.env
+*.kubeconfig
+*.state
+*.elaborate

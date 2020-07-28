@@ -1,0 +1,113 @@
+version: 1
+kind: stack
+meta:
+  name: Application development stack
+  brief: Prometheus, Kube Dashboard, Harbor, and Minio for application development
+components:
+  - name: tiller
+    source:
+      dir: components/tiller
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: tiller
+  - name: storage-class
+    source:
+      dir: components/storage-class
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: storage-class
+  - name: external-dns
+    source:
+      dir: components/external-dns
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: external-dns
+  - name: cert-manager
+    source:
+      dir: components/cert-manager
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: cert-manager
+  - name: traefik
+    source:
+      dir: components/traefik2
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: traefik2
+  - name: tls-host-controller
+    source:
+      dir: components/tls-host-controller
+      git:
+        remote: 'https://github.com/agilestacks/tls-host-controller.git'
+        ref: master
+  - name: dex
+    source:
+      dir: components/dex
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: dex
+  - name: kube-dashboard
+    source:
+      dir: components/kube-dashboard
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: kube-dashboard2
+  - name: prometheus
+    source:
+      dir: components/prometheus-operator
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: prometheus-operator
+  # - name: minio
+  #   source:
+  #     dir: components/minio
+  #     git:
+  #       remote: 'https://github.com/agilestacks/components.git'
+  #       ref: master
+  #       subDir: minio
+  - name: harbor
+    source:
+      dir: components/harbor
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: harbor
+
+requires:
+  - aws
+  - kubernetes
+lifecycle:
+  verbs:
+    - deploy
+    - undeploy
+  order:
+    - tiller
+    - storage-class
+    - external-dns
+    - cert-manager
+    - traefik2
+    - tls-host-controller
+    - dex
+    - kube-dashboard
+    - prometheus
+    # - minio
+    - harbor
+
+outputs:
+  - name: component.harbor.url
+  - name: component.docker.registry.url
+  - name: component.docker.auth.host
+  - name: component.docker.auth.basic.username
+  - name: component.docker.auth.basic.password
+  # - name: component.minio.url
+  - name: component.prometheus.url
+  - name: component.kube-dashboard.url
+  - name: component.ingress.dashboard.url

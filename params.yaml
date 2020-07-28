@@ -1,0 +1,94 @@
+parameters:
+- name: cloud
+  brief: Cloud
+  kind: user
+  parameters:
+  - name: kind
+    value: aws
+  - name: region
+    fromEnv: AWS_REGION
+
+- name: dns
+  brief: DNS
+  kind: user
+  parameters:
+  - name: name
+    brief: DNS name
+    fromEnv: HUB_STACK_NAME
+  # - name: baseDomain
+  #   brief: DNS base domain
+  #   fromEnv: BASE_DOMAIN
+  #   default: devops.delivery
+  - name: domain
+    fromEnv: HUB_DOMAIN_NAME
+
+- name: component.storage-class
+  parameters:
+  - name: name
+    value: default
+  - name: type
+    value: gp2
+
+- name: terraform.bucket
+  brief: Terraform state location
+  parameters:
+  - name: name
+    fromEnv: HUB_STATE_BUCKET
+  - name: region
+    fromEnv: HUB_STATE_REGION
+
+- name: component.ingress
+  parameters:
+  - name: dashboard
+    value: 'true'
+  - name: ssoUrlPrefix
+    value: apps
+  - name: urlPrefix
+    value: app
+
+- name: component.minio
+  kind: user
+  parameters:
+  - name: name
+    value: buckets
+  - name: namespace
+    value: ${component.kubeflow.namespace}
+  - name: accessKey
+    value: minio
+  - name: secretKey
+    value: minio123
+  - name: region
+    value: ${cloud.region}
+  - name: default.bucket.name
+    value: storage
+
+# consumed by kubeflow
+# - name: component.bucket
+#   component: kubeflow
+#   parameters:
+#   - name: accessKey
+#     value: ${component.minio.accessKey}
+#   - name: secretKey
+#     value: ${component.minio.secretKey}
+#   - name: name
+#     value: ${component.minio.default.bucket.name}
+
+- name: component.prometheus
+  parameters:
+  - name: prometheus.volumeSize
+    value: 10Gi
+  - name: prometheus.retention
+    value: 12h
+
+- name: component.external-dns.interval
+  value: 1m
+
+- name: component.dex
+  parameters:
+  - name: namespace
+    value: kube-system
+  - name: passwordDb.email
+    value: admin@agilestacks.com
+  - name: passwordDb.passwordHash
+    # 12341234
+    value: $2y$12$yua.T4aIZ5IjJsYDCal4X.jy/516D.xkFJsSGQY/vfch5aeEJc012
