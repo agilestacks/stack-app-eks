@@ -1,7 +1,7 @@
 version: 1
 kind: stack
 meta:
-  name: Application development stack
+  name: Kubernetes application development
   brief: Prometheus, Kube Dashboard, Harbor, and Minio for application development
 components:
   - name: tiller
@@ -93,7 +93,7 @@ lifecycle:
     - storage-class
     - external-dns
     - cert-manager
-    - traefik2
+    - traefik
     - tls-host-controller
     - dex
     - kube-dashboard
@@ -109,5 +109,5 @@ outputs:
   - name: component.docker.auth.basic.password
   # - name: component.minio.url
   - name: component.prometheus.url
-  - name: component.kube-dashboard.url
+  - name: component.kubernetes-dashboard.url
   - name: component.ingress.dashboard.url

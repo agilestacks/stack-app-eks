@@ -46,32 +46,21 @@ parameters:
   - name: urlPrefix
     value: app
 
-- name: component.minio
-  kind: user
-  parameters:
-  - name: name
-    value: buckets
-  - name: namespace
-    value: ${component.kubeflow.namespace}
-  - name: accessKey
-    value: minio
-  - name: secretKey
-    value: minio123
-  - name: region
-    value: ${cloud.region}
-  - name: default.bucket.name
-    value: storage
-
-# consumed by kubeflow
-# - name: component.bucket
-#   component: kubeflow
+# - name: component.minio
+#   kind: user
 #   parameters:
-#   - name: accessKey
-#     value: ${component.minio.accessKey}
-#   - name: secretKey
-#     value: ${component.minio.secretKey}
 #   - name: name
-#     value: ${component.minio.default.bucket.name}
+#     value: buckets
+#   - name: namespace
+#     value: ${component.kubeflow.namespace}
+#   - name: accessKey
+#     value: minio
+#   - name: secretKey
+#     value: minio123
+#   - name: region
+#     value: ${cloud.region}
+#   - name: default.bucket.name
+#     value: storage
 
 - name: component.prometheus
   parameters:
@@ -92,3 +81,13 @@ parameters:
   - name: passwordDb.passwordHash
     # 12341234
     value: $2y$12$yua.T4aIZ5IjJsYDCal4X.jy/516D.xkFJsSGQY/vfch5aeEJc012
+
+- name: component.harbor
+  parameters:
+  - name: storage
+    value: local
+  - name: password
+    value: "h12341234"
+
+- name: component.kubernetes-dashboard.rbac.kind
+  value: admin
