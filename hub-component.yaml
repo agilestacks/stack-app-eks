@@ -1,0 +1,78 @@
+---
+version: 1
+kind: component
+meta:
+  name: cert-manager
+  title: Let’s Encrypt
+  brief: Automate the management and issuance of TLS certificates
+  description: >
+    Let’s Encrypt is a free, automated, and open certificate authority (CA), run for the public’s benefit.
+    It is a service provided by the Internet Security Research Group (ISRG).
+  category: Transport Layer Security
+  version: v0.15.2
+  maturity: ga
+  license: Apache 2.0
+  source:
+    dir: ../../components/cert-manager
+
+requires:
+- kubernetes
+provides:
+- cert-manager
+
+parameters:
+- name: cloud.region # for DNS01 ACME solver
+  value: us-east-1
+- name: cloud.kind
+  env: CLOUD_KIND
+- name: cloud.aws.secretKey
+  empty: allow
+- name: cloud.aws.accessKey
+  empty: allow
+- name: dns.domain
+  env: DOMAIN_NAME
+- name: component.cert-manager
+  parameters:
+  - name: name
+    value: cert-manager
+    env: COMPONENT_NAME
+  - name: namespace
+    value: cert-manager
+    env: NAMESPACE
+  - name: issuerEmail
+    value: admin@superhub.io
+  - name: defaultIssuerName
+    value: letsencrypt-prod-default
+  - name: defaultIssuerKind
+    value: ClusterIssuer
+   #value: Issuer
+  - name: caIssuer
+    empty: allow
+    parameters:
+    - name: name
+      value: ca-issuer
+    - name: key
+    - name: cert
+# alias for CEL expression
+- name: certmanager.caIssuer.key
+  value: ${component.cert-manager.caIssuer.key}
+- name: component.cert-manager.caIssuer.enabled
+  value: '#{size(certmanager.caIssuer.key) > 1}'
+  env: CA_ISSUER_ENABLED
+- name: certmanager.awsDnsCredentials.accessKey
+  value: ${cloud.aws.accessKey}
+- name: component.cert-manager.awsDnsCredentials.enabled
+  value: '#{size(certmanager.awsDnsCredentials.accessKey) > 1}'
+  env: AWS_DNS_CREDENTIALS_ENABLED
+
+outputs:
+- name: component.tls.kind
+  value: letsencrypt
+- name: component.cert-manager.defaultIssuerName
+- name: component.cert-manager.defaultIssuerKind
+- name: component.cert-manager.issuerEmail
+
+templates:
+  files:
+  - "*.template"
+  - "issuers/*.template"
