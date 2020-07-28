@@ -1,0 +1,42 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: thanos-compactor
+  labels:
+    app: thanos-compactor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thanos-compactor
+  serviceName: thanos-compactor
+  template:
+    metadata:
+      labels:
+        app: thanos-compactor
+    spec:
+      containers:
+        - name: thanos
+          image: thanosio/thanos:${component.prometheus.thanos.version}
+          args:
+            - compact
+            - --log.level=debug
+            - --data-dir=/data
+            - --objstore.config=$(OBJSTORE_CONFIG)
+            - --wait
+          ports:
+            - name: http
+              containerPort: 10902
+          env:
+          - name: OBJSTORE_CONFIG
+            valueFrom:
+              secretKeyRef:
+                name: thanos-objstore-config
+                key: thanos-config.yaml
+          resources:
+            limits:
+              cpu: "2"
+              memory: 2Gi
+            requests:
+              cpu: "1"
+              memory: 1Gi
