@@ -111,3 +111,5 @@ outputs:
   - name: component.prometheus.url
   - name: component.kubernetes-dashboard.url
   - name: component.ingress.dashboard.url
+  - name: component.ingress.fqdn
+  - name: component.ingress.ssoFqdn
