@@ -87,7 +87,16 @@ parameters:
   - name: storage
     value: local
   - name: password
-    value: "h12341234"
+    value: "Harbor1234"
+
+- name: component.postgresql
+  parameters:
+  - name: database
+    value: postgres
+  - name: user
+    value: postgres
+  - name: password
+    value: "Postgres1234"
 
 - name: component.kubernetes-dashboard.rbac.kind
   value: admin

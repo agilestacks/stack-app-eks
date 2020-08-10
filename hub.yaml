@@ -80,6 +80,13 @@ components:
         remote: 'https://github.com/agilestacks/components.git'
         ref: master
         subDir: harbor
+  - name: postgresql
+    source:
+      dir: components/postgresql
+      git:
+        remote: 'https://github.com/agilestacks/components.git'
+        ref: master
+        subDir: postgresql
 
 requires:
   - aws
@@ -100,6 +107,7 @@ lifecycle:
     - prometheus
     # - minio
     - harbor
+    - postgresql
 
 outputs:
   - name: component.harbor.url
@@ -107,6 +115,11 @@ outputs:
   - name: component.docker.auth.host
   - name: component.docker.auth.basic.username
   - name: component.docker.auth.basic.password
+  - name: component.postgresql.host
+  - name: component.postgresql.port
+  - name: component.postgresql.database
+  - name: component.postgresql.user
+  - name: component.postgresql.password
   # - name: component.minio.url
   - name: component.prometheus.url
   - name: component.kubernetes-dashboard.url
