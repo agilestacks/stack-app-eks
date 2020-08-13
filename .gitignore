@@ -1,5 +1,6 @@
 .envrc
 .env
+/.hub/
 *.bubble
 *.env
 *.kubeconfig
