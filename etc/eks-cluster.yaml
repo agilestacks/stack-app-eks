@@ -7,21 +7,20 @@ metadata:
   version: "1.17"
 
 availabilityZones:
-- us-east-2a
 - us-east-2b
 - us-east-2c
 
 nodeGroups:
 - name: workers
-  desiredCapacity: 1
+  desiredCapacity: 2
   minSize: 1
   maxSize: 5
   instancesDistribution:
     instanceTypes:
-    - m5.xlarge
-    - m5a.xlarge
-    - r4.xlarge
-    - t3.xlarge
+    - m5.large
+    - m5a.large
+    - r4.large
+    - t3.large
     onDemandBaseCapacity: 0
     onDemandPercentageAboveBaseCapacity: 0
   volumeSize: 50
@@ -46,35 +45,6 @@ nodeGroups:
       certManager: true
       externalDNS: true
       ebs: true
-
-# iam:
-#   withOIDC: true
-#   serviceAccounts:
-#   - metadata:
-#       name: applications
-#       namespace: kube-system
-#       labels: {aws-usage: "cluster-ops"}
-#     attachPolicy: # inline policy can be defined along with `attachPolicyARNs`
-#       Version: "2012-10-17"
-#       Statement:
-#       - Effect: Allow
-#         Action:
-#         - "autoscaling:DescribeAutoScalingGroups"
-#         - "autoscaling:DescribeAutoScalingInstances"
-#         - "autoscaling:DescribeLaunchConfigurations"
-#         - "autoscaling:DescribeTags"
-#         - "autoscaling:SetDesiredCapacity"
-#         - "autoscaling:TerminateInstanceInAutoScalingGroup"
-#         # for external-dns
-#         - "route53:ChangeResourceRecordSets"
-#         - "route53:ListHostedZones"
-#         - "route53:ListResourceRecordSets"
-#         # read-write to s3 (hub or terraform state)
-#         - "s3:ListBucket"
-#         - "s3:*Object"
-#         # Reserved for future OIDC integration
-#         # - "sts:AssumeRoleWithWebIdentity"
-#         Resource: '*'
 
 cloudWatch:
   clusterLogging:
