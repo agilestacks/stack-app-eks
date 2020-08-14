@@ -12,7 +12,7 @@ export HUB_DOMAIN_NAME  := $(DOMAIN_NAME)
 export HUB_STATE_BUCKET := $(STATE_BUCKET)
 export HUB_STATE_REGION := $(STATE_REGION)
 
-STACK_NAME ?= overlay
+STACK_NAME ?= app
 
 STORAGE_KIND    ?= s3
 STATE_CONTAINER ?= agilestacks
@@ -72,7 +72,7 @@ endif
 
 $(ELABORATE_FILE_FS): hub.yaml $(TEMPLATE_PARAMS) $(STACK_PARAMS) $(RESTORE_PARAMS_FILE) params.yaml
 	$(hub) elaborate \
-		hub.yaml $(TEMPLATE_PARAMS) $(STACK_PARAMS) $(RESTORE_PARAMS_FILE) params.yaml \
+		hub.yaml params.yaml $(TEMPLATE_PARAMS) $(STACK_PARAMS) $(RESTORE_PARAMS_FILE) \
 		$(if $(PLATFORM_PROVIDES),-p $(PLATFORM_PROVIDES),) \
 		$(if $(PLATFORM_STATE_FILES),-s $(PLATFORM_STATE_FILES),) \
 		$(HUB_OPTS) \
