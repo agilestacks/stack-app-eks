@@ -110,7 +110,7 @@ lifecycle:
     - postgresql
 
 outputs:
-  - name: component.harbor.url
+  - name: harbor:component.harbor.url
   - name: component.docker.registry.url
   - name: component.docker.auth.host
   - name: component.docker.auth.basic.username
@@ -120,10 +120,10 @@ outputs:
   - name: component.postgresql.database
   - name: component.postgresql.user
   - name: component.postgresql.password
-  # - name: component.minio.url
-  - name: component.prometheus.grafana.url
-  - name: component.prometheus.url
-  - name: component.kubernetes-dashboard.url
-  - name: component.ingress.dashboard.url
-  - name: component.ingress.fqdn
-  - name: component.ingress.ssoFqdn
+  # - name: minio:component.minio.url
+  - name: prometheus:component.prometheus.grafana.url
+  - name: prometheus:component.prometheus.url
+  - name: kube-dashboard:component.kubernetes-dashboard.url
+  - name: traefik:component.ingress.dashboard.url
+  - name: traefik:component.ingress.fqdn
+  - name: traefik:component.ingress.ssoFqdn
