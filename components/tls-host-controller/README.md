@@ -1,9 +1,7 @@
 
 # TLS Host Controller
 
-This is an admission webhook mutator. This routine receives a manifest submission in front of the API. If it meets filter criteria, will mutate the manifest, and passes the mutated manifest along.
-
-This specific webhook looks only for `Ingress` manifests.  Its logic is as follows:
+This is an admission webhook mutator to configure `Ingress` objects `TLS` block. This routine receives a manifest submission in front of the API. If it meets filter criteria, will mutate the manifest, and passes the mutated manifest along. The logic is:
 
 ```
 if spec.TLS exists:
@@ -25,7 +23,7 @@ Note that any existing `tls` blocks or `tls.host` entries will not be modified. 
 # Deploying
 
 This container is intended to be deployed into customer infrastructure (namely on-prem, but should work anywhere).
-Therefore, this container is hosted as a public resource in hub.docker.com/agilestacks/tls-host-controller
+Therefore, this container is hosted as a public resource in [https://hub.docker.com/r/agilestacks/tls-host-controller].
 
 # Building and Pushing
 
