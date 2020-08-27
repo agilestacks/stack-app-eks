@@ -48,6 +48,8 @@ This is one-time operation per cloud account to create S3 bucket and one-time op
 $ hub aws init
 ```
 
+The obtained DNS subdomain (of `devops.delivery`) is valid for 72h. To renew the lease please re-run `hub aws init` every other day.
+
 ### 5. Deploy current stack
 
 ```
