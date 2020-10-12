@@ -88,6 +88,17 @@ components:
         ref: master
         subDir: postgresql
 
+extensions:
+  include: [params.yaml]
+  configure:
+  - components
+  - aws
+  - kubernetes
+  - env
+  deploy:  
+    after:
+    - inventory-configmap
+
 requires:
   - aws
   - kubernetes

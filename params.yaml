@@ -77,26 +77,30 @@ parameters:
   - name: namespace
     value: kube-system
   - name: passwordDb.email
-    value: admin@agilestacks.com
-  - name: passwordDb.passwordHash
-    # 12341234
-    value: $2y$12$yua.T4aIZ5IjJsYDCal4X.jy/516D.xkFJsSGQY/vfch5aeEJc012
+    brief: User email (to login with SSO)
+    fromEnv: COMPONENT_DEX_PASSWORD_DB_EMAIL
+  - name: passwordDb.password
+    brief: User password (to login with SSO)
+    fromEnv: COMPONENT_DEX_PASSWORD_DB_PASSWORD
 
 - name: component.harbor
   parameters:
   - name: storage
     value: local
   - name: password
-    value: "Harbor1234"
+    brief: Password for user "admin" (Harbor)
+    fromEnv: COMPONENT_HARBOR_PASSWORD
 
 - name: component.postgresql
   parameters:
   - name: database
     value: postgres
   - name: user
-    value: postgres
+    brief: Username for PostgreSQL database
+    fromEnv: COMPONENT_POSTGREESQL_USER
   - name: password
-    value: "Postgres1234"
+    brief: Password for PostgreSQL database
+    fromEnv: COMPONENT_POSTGREESQL_PASSWORD
 
 - name: component.kubernetes-dashboard.rbac.kind
   value: admin
