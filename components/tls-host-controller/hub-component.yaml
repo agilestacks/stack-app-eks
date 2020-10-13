@@ -10,7 +10,6 @@ meta:
 
 requires:
 - kubernetes
-- cert-manager
 
 lifecycle:
   verbs:

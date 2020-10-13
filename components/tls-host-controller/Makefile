@@ -11,7 +11,12 @@ REGISTRY_PASS         ?= ~/.docker/agilestacks.txt
 docker  := docker
 kubectl := kubectl --context="$(DOMAIN_NAME)" --namespace="$(NAMESPACE)"
 
+ifneq (,$(filter tls-ingress,$(HUB_PROVIDES)))
 deploy: purge create install
+else
+deploy:
+	@echo tls-ingress must be provided to install tls-host-controller
+endif
 
 undeploy: purge
 
