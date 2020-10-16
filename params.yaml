@@ -97,10 +97,10 @@ parameters:
     value: postgres
   - name: user
     brief: Username for PostgreSQL database
-    fromEnv: COMPONENT_POSTGREESQL_USER
+    fromEnv: COMPONENT_POSTGRESQL_USER
   - name: password
     brief: Password for PostgreSQL database
-    fromEnv: COMPONENT_POSTGREESQL_PASSWORD
+    fromEnv: COMPONENT_POSTGRESQL_PASSWORD
 
 - name: component.kubernetes-dashboard.rbac.kind
   value: admin
