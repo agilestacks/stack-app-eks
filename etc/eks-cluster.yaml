@@ -27,7 +27,7 @@ nodeGroups:
   volumeType: gp2
   ssh:
     allow: true # will use ~/.ssh/id_rsa.pub as the default ssh key
-    publicKeyName: agilestacks
+    # publicKeyName: agilestacks
     # publicKeyPath: ~/.ssh/agilestacks-2019.11.pub
   tags:
     k8s.io/cluster-autoscaler/enabled: "true"
