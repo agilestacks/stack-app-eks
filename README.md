@@ -46,7 +46,7 @@ The command will use current Kubeconfig context (setup by `eksctl`), generates s
 * AWS configuration - S3 bucket to store deployment state
 * Stack parameters such as usernames and passwords
 
-The obtained DNS subdomain (of `bubble.superhub.io`) is valid for 72h. To renew the lease please re-run `hub configure -r dns --dns-update` every other day.
+The obtained DNS subdomain (of `bubble.superhub.io`) is valid for 72h. To renew the DNS lease please run `hub configure -r aws --dns-update` every other day.  For a permanent DNS domain please contact support@agilestacks.com.
 
 ### 4. Deploy
 
@@ -54,6 +54,13 @@ The obtained DNS subdomain (of `bubble.superhub.io`) is valid for 72h. To renew 
 $ hub stack deploy
 ```
 
+## Access the Kubernetes Dashboard
+
+You can find the URL of deployed Kubeflow Dashboard using the `hub show` command:
+```bash
+$ hub show
+```
+Note: `hub show` command will the return values for all stack parameters. Kubernetes Dashboard URL is shown as value for parameter `kube-dashboard:component.kubernetes-dashboard.url` with login username `component.dex.passwordDb.email` and password `component.dex.passwordDb.password`
 
 ## What's next?
 
