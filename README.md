@@ -31,7 +31,7 @@ Install [Hub CLI](https://docs.agilestacks.com/article/zrban5vpb5-install-toolbo
 $ hub extensions install
 ```
 
-Hub CLI Extensions require [AWS CLI](https://aws.amazon.com/cli/), [KUBECTL](https://kubernetes.io/docs/reference/kubectl/overview/), [EKSCTL](https://eksctl.io), [JQ](https://stedolan.github.io/jq/), [YQ v3](https://github.com/mikefarah/yq). Optionally install [Node.js](https://nodejs.org) and NPM for `hub pull` extension.
+Hub CLI Extensions require [AWS CLI], [kubectl], [eksctl], [jq], [yq v3]. Optionally install [Node.js] and NPM for `hub pull` extension.
 
 ### 3. Configure stack
 
@@ -54,20 +54,22 @@ The obtained DNS subdomain (of `bubble.superhub.io`) is valid for 72h. To renew 
 $ hub stack deploy
 ```
 
-## Access the Kubernetes Dashboard
+### 5. Access Kubernetes Dashboard
 
-You can find the URL of deployed Kubeflow Dashboard using the `hub show` command:
-```bash
+You can find the URL of deployed Kubernetes Dashboard using `hub show` command:
+
+```
 $ hub show
 ```
-Note: `hub show` command will the return values for all stack parameters. Kubernetes Dashboard URL is shown as value for parameter `kube-dashboard:component.kubernetes-dashboard.url` with login username `component.dex.passwordDb.email` and password `component.dex.passwordDb.password`
+
+The command will the return values for all stack parameters. Kubernetes Dashboard URL is shown as value for parameter `kube-dashboard:component.kubernetes-dashboard.url` with login username `component.dex.passwordDb.email` and password `component.dex.passwordDb.password`.
+
 
 ## What's next?
 
 ### Kubernetes Application
 
 **Work in progress** We have a tutorial on a simple Kubernetes application [with Skaffold](https://docs.agilestacks.com/article/4b2q2dcof9-development-workflow-on-kubernetes-with-skaffold). Then a follow up tutorial to enable application to [access PostgreSQL](https://docs.agilestacks.com/article/j4cysq9ka5-201-python-efficient-development-for-kubernetes-enable-database).
-
 
 ### Redeploy one or more stack components
 
@@ -78,7 +80,7 @@ $ hub stack deploy -c harbor,prometheus
 
 ### Deploy components starting from a particular component
 
-```bash
+```
 $ hub stack deploy -o prometheus
 ```
 
@@ -88,3 +90,11 @@ $ hub stack deploy -o prometheus
 $ hub stack undeploy
 $ eksctl delete cluster -f etc/eks-cluster.yaml
 ```
+
+
+[AWS CLI]: https://aws.amazon.com/cli/
+[kubectl]: https://kubernetes.io/docs/reference/kubectl/overview/
+[eksctl]: https://eksctl.io
+[jq]: https://stedolan.github.io/jq/
+[yq v3]: https://github.com/mikefarah/yq
+[Node.js]: https://nodejs.org
