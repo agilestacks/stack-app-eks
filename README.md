@@ -21,7 +21,9 @@ In case you have an existing EKS cluster, then use the following example command
 $ aws eks --region us-east-2 update-kubeconfig --name cluster-name
 ```
 
-Also, please make sure `certManager` and `externalDNS` addon policies are deployed.
+Please make sure `certManager` and `externalDNS` addon policies are deployed.
+
+Also, confirm `AWS_PROFILE` setting used to deploy the cluster (and generate Kubeconfig) match profile for the next step. Using different profiles - even if they're pointing to the same AWS account - may not work.
 
 ### 2. Install Hub CLI
 
