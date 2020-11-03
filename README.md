@@ -71,7 +71,7 @@ The command will the return values for all stack parameters. Kubernetes Dashboar
 
 ### Kubernetes Application
 
-**Work in progress** We have a tutorial on a simple Kubernetes application [with Skaffold](https://docs.agilestacks.com/article/4b2q2dcof9-development-workflow-on-kubernetes-with-skaffold). Then a follow up tutorial to enable application to [access PostgreSQL](https://docs.agilestacks.com/article/j4cysq9ka5-201-python-efficient-development-for-kubernetes-enable-database).
+Deploy a Python application [with Skaffold and Hub CLI Tutorial](https://docs.agilestacks.com/article/3pbulps5n7-simplifying-kubernetes-for-developers-with-hub-cli-and-skaffold). Then you can enable the application to [access PostgreSQL](https://docs.agilestacks.com/article/j4cysq9ka5-201-python-efficient-development-for-kubernetes-enable-database).
 
 ### Redeploy one or more stack components
 
