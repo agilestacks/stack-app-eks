@@ -79,9 +79,12 @@ parameters:
   - name: passwordDb.email
     brief: User email (to login with SSO)
     fromEnv: COMPONENT_DEX_PASSWORD_DB_EMAIL
+    default: support@agilestacks.com
+    empty: allow
   - name: passwordDb.password
     brief: User password (to login with SSO)
     fromEnv: COMPONENT_DEX_PASSWORD_DB_PASSWORD
+    empty: allow
 
 - name: component.harbor
   parameters:
