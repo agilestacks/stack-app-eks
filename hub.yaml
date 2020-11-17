@@ -91,12 +91,12 @@ components:
 extensions:
   include: [params.yaml]
   configure:
-  - aws
-  - kubernetes
-  - env
-  deploy:  
+    - aws
+    - kubernetes
+    - env
+  deploy:
     after:
-    - inventory-configmap
+      - inventory-configmap
 
 requires:
   - aws
