@@ -48,7 +48,7 @@ RESTORE_PARAMS_FILE ?= restore-params.yaml
 
 HUB_OPTS ?=
 
-hub    ?= hub -d
+hub    ?= hub
 aws    ?= aws --region $(STATE_REGION)
 gsutil ?= gsutil
 az     ?= az
