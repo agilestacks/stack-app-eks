@@ -91,7 +91,6 @@ components:
 extensions:
   include: [params.yaml]
   configure:
-  - components
   - aws
   - kubernetes
   - env
