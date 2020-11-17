@@ -101,6 +101,7 @@ parameters:
   - name: user
     brief: Username for PostgreSQL database
     fromEnv: COMPONENT_POSTGRESQL_USER
+    default: postgres
   - name: password
     brief: Password for PostgreSQL database
     fromEnv: COMPONENT_POSTGRESQL_PASSWORD
