@@ -1,6 +1,6 @@
 # Kubernetes Application Development Stack on EKS
 
-App stack deploys Traefik ingress controller, External DNS, TLS via Cert-manager, Dex for SSO, Prometheus, Kube Dashboard, Harbor, PostgreSQL, and optionally Minio for application development.
+App stack deploys External DNS, Traefik v2 ingress controller, TLS via Cert-manager with Let's Encrypt, Dex for SSO, Kubernetes Dashboard v2, Prometheus Operator, Harbor, PostgreSQL, and optionally Minio for application development.
 
 
 ## Installation
@@ -64,7 +64,7 @@ You can find the URL of deployed Kubernetes Dashboard using `hub show` command:
 $ hub show
 ```
 
-The command will the return values for all stack parameters. Kubernetes Dashboard URL is shown as value for parameter `kube-dashboard:component.kubernetes-dashboard.url` with login username `component.dex.passwordDb.email` and password `component.dex.passwordDb.password`.
+The command will return the values for all stack parameters. Kubernetes Dashboard URL is shown as value for parameter `kube-dashboard:component.kubernetes-dashboard.url` with login username `component.dex.passwordDb.email` and password `component.dex.passwordDb.password`.
 
 
 ## What's next?
