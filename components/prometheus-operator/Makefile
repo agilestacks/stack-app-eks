@@ -9,7 +9,7 @@ OPERATOR_VERSION ?= v0.43.2
 CLOUD_KIND       ?= aws
 
 kubectl ?= kubectl --context="$(DOMAIN_NAME)" --namespace="$(NAMESPACE)"
-helm    ?= helm3 --kube-context="$(DOMAIN_NAME)" --namespace="$(NAMESPACE)"
+helm    ?= helm --kube-context="$(DOMAIN_NAME)" --namespace="$(NAMESPACE)"
 
 deploy: clean init fetch patch purge install
 ifeq ($(THANOS_ENABLED),true)
@@ -41,7 +41,7 @@ patch:
 	sed -i~ -E -e 's/(appVersion: ).*/\1$(OPERATOR_VERSION)/' charts/kube-prometheus-stack/Chart.yaml
 
 purge:
-	$(helm) list --uninstalled --failed -q --namespace $(NAMESPACE) | grep -E '^$(COMPONENT_NAME)$$' && \
+	$(helm) list --uninstalled --failed -q | grep -E '^$(COMPONENT_NAME)$$' && \
 		$(helm) uninstall $(COMPONENT_NAME) && \
 		$(kubectl) delete crd/alertmanagerconfigs.monitoring.coreos.com && \
 		$(kubectl) delete crd/alertmanagers.monitoring.coreos.com && \
@@ -56,7 +56,6 @@ install:
 	$(kubectl) apply -f oidc.yaml
 	$(helm) upgrade $(COMPONENT_NAME) charts/$(notdir $(HELM_CHART)) \
 		--install --create-namespace \
-		--namespace $(NAMESPACE) \
 		--wait \
 		--values values.yaml \
 		$(THANOS_VALUES) \
@@ -84,7 +83,7 @@ unthanos:
 uninstall:
 	-$(kubectl) delete -f oidc-crd.yaml
 
-	$(helm) list -q --namespace $(NAMESPACE) | grep -E '^$(COMPONENT_NAME)$$' && \
+	$(helm) list -q | grep -E '^$(COMPONENT_NAME)$$' && \
 		$(helm) uninstall $(COMPONENT_NAME) || exit 0
 
 	-$(kubectl) delete crd/alertmanagerconfigs.monitoring.coreos.com
