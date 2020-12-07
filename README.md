@@ -11,15 +11,11 @@ Create EKS cluster in AWS Console or with [eksctl](https://docs.aws.amazon.com/e
 
 Edit `etc/eks-cluster.yaml` to set cluster name and AWS region.
 
-```
-$ eksctl create cluster -f etc/eks-cluster.yaml
-```
+    $ eksctl create cluster -f etc/eks-cluster.yaml
 
 In case you have an existing EKS cluster, then use the following example command to configure EKS cluster context:
 
-```
-$ aws eks --region us-east-2 update-kubeconfig --name cluster-name
-```
+    $ aws eks --region us-east-2 update-kubeconfig --name cluster-name
 
 Please make sure `certManager` and `externalDNS` addon policies are deployed.
 
@@ -27,19 +23,26 @@ Also, confirm `AWS_PROFILE` setting used to deploy the cluster (and generate Kub
 
 ### 2. Install Hub CLI
 
-Install [Hub CLI](https://docs.agilestacks.com/article/zrban5vpb5-install-toolbox#hub_cli) and then install extensions:
+Install [Hub CLI](https://docs.agilestacks.com/article/zrban5vpb5-install-toolbox#hub_cli):
 
-```
-$ hub extensions install
-```
+    curl -O https://controlplane.agilestacks.io/dist/hub-cli/hub.linux_amd64
+    mv hub.linux_amd64 hub
+    chmod +x hub
+    sudo mv hub /usr/local/bin
+
+There are [Linux amd64](https://controlplane.agilestacks.io/dist/hub-cli/hub.linux_amd64), [Linux arm64](https://controlplane.agilestacks.io/dist/hub-cli/hub.linux_arm64), and [macOS amd64](https://controlplane.agilestacks.io/dist/hub-cli/hub.darwin_amd64) binaries.
+
+Install extensions:
+
+    $ hub extensions install
 
 Hub CLI Extensions require [AWS CLI], [kubectl], [eksctl], [jq], [yq v3]. Optionally install [Node.js] and NPM for `hub pull` extension.
 
+Windows users please [read on](https://docs.agilestacks.com/article/u6a9cq5yya-hub-cli-on-windows).
+
 ### 3. Configure stack
 
-```
-$ hub configure -f hub.yaml
-```
+    $ hub configure -f hub.yaml
 
 The command will use current Kubeconfig context (setup by `eksctl`), generates stack configuration, then stores it in environment file `.env` (a symlink to current active configuration):
 
@@ -52,17 +55,13 @@ The obtained DNS subdomain (of `bubble.superhub.io`) is valid for 72h. To renew 
 
 ### 4. Deploy
 
-```
-$ hub stack deploy
-```
+    $ hub stack deploy
 
 ### 5. Access Kubernetes Dashboard
 
 You can find the URL of deployed Kubernetes Dashboard using `hub show` command:
 
-```
-$ hub show
-```
+    $ hub show
 
 The command will return the values for all stack parameters. Kubernetes Dashboard URL is shown as value for parameter `kube-dashboard:component.kubernetes-dashboard.url` with login username `component.dex.passwordDb.email` and password `component.dex.passwordDb.password`.
 
@@ -75,23 +74,28 @@ Deploy a Python application [with Skaffold and Hub CLI Tutorial](https://docs.ag
 
 ### Redeploy one or more stack components
 
-```
-$ hub stack undeploy -c harbor,prometheus
-$ hub stack deploy -c harbor,prometheus
-```
+    $ hub stack undeploy -c harbor,prometheus
+    $ hub stack deploy -c harbor,prometheus
 
 ### Deploy components starting from a particular component
 
-```
-$ hub stack deploy -o prometheus
-```
+    $ hub stack deploy -o prometheus
+
+### Undeploy components up to a particular component
+
+    $ hub stack undeploy -l prometheus
+
+### Update elaborate file
+
+If you change `hub.yaml`, or `params.yaml`, or any of `hub-component.yaml`-s, you may want to forcibly re-elaborate:
+
+    $ hub stack elaborate
+
 
 ## Teardown
 
-```
-$ hub stack undeploy
-$ eksctl delete cluster -f etc/eks-cluster.yaml
-```
+    $ hub stack undeploy
+    $ eksctl delete cluster -f etc/eks-cluster.yaml
 
 
 [AWS CLI]: https://aws.amazon.com/cli/
