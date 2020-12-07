@@ -4,13 +4,13 @@ meta:
   name: Kubernetes application development
   brief: Prometheus, Kube Dashboard, Harbor, and Minio for application development
 components:
-  - name: tiller
-    source:
-      dir: components/tiller
-      git:
-        remote: 'https://github.com/agilestacks/components.git'
-        ref: master
-        subDir: tiller
+  # - name: tiller
+  #   source:
+  #     dir: components/tiller
+  #     git:
+  #       remote: 'https://github.com/agilestacks/components.git'
+  #       ref: master
+  #       subDir: tiller
   - name: storage-class
     source:
       dir: components/storage-class
@@ -106,7 +106,7 @@ lifecycle:
     - deploy
     - undeploy
   order:
-    - tiller
+    # - tiller
     - storage-class
     - external-dns
     - cert-manager
