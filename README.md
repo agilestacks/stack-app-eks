@@ -40,6 +40,14 @@ Hub CLI Extensions require [AWS CLI], [kubectl], [eksctl], [jq], [yq v3]. Option
 
 Windows users please [read on](https://docs.agilestacks.com/article/u6a9cq5yya-hub-cli-on-windows).
 
+#### macOS users
+
+Depending on your machine Security & Privacy settings and macOS version (10.15+), you may get an error _cannot be opened because the developer cannot be verified_. Please [read on](https://github.com/hashicorp/terraform/issues/23033#issuecomment-542302933) for a simple workaround.
+
+Alternativelly, to set global preference to _Allow apps downloaded from: Anywhere_, execute:
+
+    $ sudo spctl --master-disable
+
 ### 3. Configure stack
 
     $ hub configure -f hub.yaml
