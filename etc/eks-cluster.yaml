@@ -12,7 +12,7 @@ availabilityZones:
 
 nodeGroups:
 - name: workers
-  desiredCapacity: 2
+  desiredCapacity: 3
   minSize: 1
   maxSize: 5
   instancesDistribution:
