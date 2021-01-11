@@ -36,7 +36,7 @@ Install extensions:
 
     $ hub extensions install
 
-Hub CLI Extensions require [AWS CLI], [kubectl], [eksctl], [jq], [yq v3]. Optionally install [Node.js] and NPM for `hub pull` extension.
+Hub CLI Extensions require [AWS CLI], [kubectl], [eksctl], [jq], [yq v4]. Optionally install [Node.js] and NPM for `hub pull` extension.
 
 Windows users please [read on](https://docs.agilestacks.com/article/u6a9cq5yya-hub-cli-on-windows).
 
@@ -117,5 +117,5 @@ If you change `hub.yaml`, or `params.yaml`, or any of `hub-component.yaml`-s, yo
 [kubectl]: https://kubernetes.io/docs/reference/kubectl/overview/
 [eksctl]: https://eksctl.io
 [jq]: https://stedolan.github.io/jq/
-[yq v3]: https://github.com/mikefarah/yq
+[yq v4]: https://github.com/mikefarah/yq
 [Node.js]: https://nodejs.org
