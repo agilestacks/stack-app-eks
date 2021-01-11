@@ -48,6 +48,13 @@ Alternativelly, to set global preference to _Allow apps downloaded from: Anywher
 
     $ sudo spctl --master-disable
 
+For `tls-host-controller` to deploy we require `v3_ca` extension to be configured. Either your `openssl` binary is from OpenSSL project or you must add a few lines to `/etc/ssl/openssl.cnf` LibreSSL config:
+
+    [ v3_ca ]
+    basicConstraints = critical,CA:TRUE
+    subjectKeyIdentifier = hash
+    authorityKeyIdentifier = keyid:always,issuer:always
+
 ### 3. Configure stack
 
     $ hub configure -f hub.yaml
