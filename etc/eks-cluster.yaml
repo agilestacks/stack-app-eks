@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: applications
   region: us-east-2
-  version: "1.17"
+  version: "1.18"
 
 availabilityZones:
 - us-east-2b
