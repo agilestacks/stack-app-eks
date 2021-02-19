@@ -40,6 +40,8 @@ Hub CLI Extensions require [AWS CLI], [kubectl], [eksctl], [jq], [yq v4]. Option
 
 Windows users please [read on](https://docs.agilestacks.com/article/u6a9cq5yya-hub-cli-on-windows).
 
+More information on Hub CLI in [wiki](https://github.com/agilestacks/hub/wiki).
+
 #### macOS users
 
 Depending on your machine Security & Privacy settings and macOS version (10.15+), you may get an error _cannot be opened because the developer cannot be verified_. Please [read on](https://github.com/hashicorp/terraform/issues/23033#issuecomment-542302933) for a simple workaround.
@@ -48,12 +50,22 @@ Alternativelly, to set global preference to _Allow apps downloaded from: Anywher
 
     $ sudo spctl --master-disable
 
-For `tls-host-controller` to deploy we require `v3_ca` extension to be configured. Either your `openssl` binary is from OpenSSL project or you must add a few lines to `/etc/ssl/openssl.cnf` LibreSSL config:
+For `tls-host-controller` to deploy we require `v3_ca` extension to be configured. Either your `openssl` binary is from OpenSSL project - installed by MacPorts or Homebrew, or you must add a few lines to `/etc/ssl/openssl.cnf` LibreSSL config:
 
     [ v3_ca ]
     basicConstraints = critical,CA:TRUE
     subjectKeyIdentifier = hash
     authorityKeyIdentifier = keyid:always,issuer:always
+
+#### Beta binaries
+
+We also publish latest binaries to the `controlplane.stage.agilestacks.io` for [Linux amd64](https://controlplane.stage.agilestacks.io/dist/hub-cli/hub.linux_amd64), [Linux arm64](https://controlplane.stage.agilestacks.io/dist/hub-cli/hub.linux_arm64), and [macOS amd64](https://controlplane.stage.agilestacks.io/dist/hub-cli/hub.darwin_amd64).
+
+#### Build from source
+
+In case you have Golang installed you may want to build from the source code:
+
+    $ go get github.com/agilestacks/hub/cmd/hub
 
 ### 3. Configure stack
 
